@@ -36,9 +36,6 @@ const ButtonGroup = () => {
         ['predictData', age, operationYear, nbPosDetected, isSurvived],
         fetchPredictedData,
         {
-            onSuccess: (response) => {
-                console.log(response);
-            },
             refetchOnWindowFocus: false,
         }
     );

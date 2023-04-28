@@ -71,7 +71,6 @@ export default function MyChart() {
             }),
         ],
     });
-    console.log('DATA:', data);
 
     const options = {
         elements: {
