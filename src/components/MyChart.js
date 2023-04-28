@@ -76,7 +76,6 @@ export const data = {
         },
     ],
 };
-
-export function MyChart() {
+export default function MyChart() {
     return <Line options={options} data={data} />;
 }

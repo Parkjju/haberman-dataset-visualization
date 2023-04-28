@@ -2,9 +2,16 @@
 sidebar_position: 1
 ---
 
+import MyChart from '@site/src/components/MyChart'
+import ButtonGroup from "@site/src/components/ButtonGroup"
+
 # Survival Analysis
 
 Let's discover **Docusaurus in less than 5 minutes**.
+
+<MyChart />
+
+<ButtonGroup />
 
 ## Getting Started
 
