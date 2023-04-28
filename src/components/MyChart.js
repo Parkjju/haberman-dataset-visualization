@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -31,32 +31,47 @@ export default function MyChart() {
     const graphData = useSelector((state) => state.graph);
 
     labels = labels.map((data) => String(data));
-    const data = {
+
+    useEffect(() => {
+        setData({
+            labels,
+            datasets: [
+                ...Object.values(graphData).map((data, index) => {
+                    return {
+                        label: `Dataset ${index}`,
+                        data,
+                        borderColor: `#${Math.floor(
+                            Math.random() * 16777215
+                        ).toString(16)}`,
+                        backgroundColor: `#${Math.floor(
+                            Math.random() * 16777215
+                        ).toString(16)}`,
+                        yAxisID: 'y',
+                    };
+                }),
+            ],
+        });
+    }, [graphData]);
+
+    const [data, setData] = useState({
         labels,
         datasets: [
-            {
-                label: 'Dataset 1',
-                data: graphData[0],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                yAxisID: 'y',
-            },
-            {
-                label: 'Dataset 2',
-                data: graphData[1],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                yAxisID: 'y1',
-            },
-            {
-                label: 'Dataset 3',
-                data: graphData[2],
-                borderColor: '#e67e22',
-                backgroundColor: '#f1c40f',
-                yAxisID: 'y1',
-            },
+            ...Object.values(graphData).map((data, index) => {
+                return {
+                    label: `Dataset ${index}`,
+                    data: data,
+                    borderColor: `#${Math.floor(
+                        Math.random() * 16777215
+                    ).toString(16)}`,
+                    backgroundColor: `#${Math.floor(
+                        Math.random() * 16777215
+                    ).toString(16)}`,
+                    yAxisID: 'y',
+                };
+            }),
         ],
-    };
+    });
+    console.log('DATA:', data);
 
     const options = {
         elements: {
