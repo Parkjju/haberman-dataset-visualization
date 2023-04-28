@@ -9,6 +9,9 @@ const graphSlice = createSlice({
             state[1] = [...action.payload[1]];
             state[2] = [...action.payload[2]];
         },
+        add: (state, action) => {
+            state[Object.keys(state).length] = action.payload;
+        },
     },
 });
 
