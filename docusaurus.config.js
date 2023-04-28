@@ -14,12 +14,12 @@ const config = {
     url: 'https://your-docusaurus-test-site.com',
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
-    baseUrl: '/',
+    baseUrl: '/haberman-dataset-visualization/',
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
     organizationName: 'Parkjju', // Usually your GitHub org/user name.
-    projectName: 'haberman', // Usually your repo name.
+    projectName: 'haberman-dataset-visualization', // Usually your repo name.
 
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://swift-mada-parkjju.koyeb.app/';
 
 export const fetchGraphData = () => {
     return axios.get('/patients/random');
