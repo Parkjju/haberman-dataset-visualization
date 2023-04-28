@@ -1,15 +1,32 @@
 import {
     Button,
     Checkbox,
+    CircularProgress,
     FormControl,
     FormControlLabel,
     TextField,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { Box, Wrapper } from './styled';
+import { fetchGraphData } from '../api';
+import { useQuery } from 'react-query';
+import { graphAction } from '../store';
+import { useDispatch } from 'react-redux';
 
 const ButtonGroup = () => {
     const [checked, setChecked] = useState(false);
+    const dispatch = useDispatch();
+
+    const handleButtonTapped = () => {
+        refetch();
+    };
+    const { isLoading, refetch } = useQuery(['graphData'], fetchGraphData, {
+        onSuccess: (response) => {
+            dispatch(graphAction.update(response.data.results));
+        },
+        refetchOnWindowFocus: false,
+    });
+
     return (
         <Wrapper>
             <FormControl>
@@ -52,7 +69,9 @@ const ButtonGroup = () => {
                 </Box>
             ) : null}
 
-            {checked ? (
+            {isLoading ? (
+                <CircularProgress />
+            ) : checked ? (
                 <Button
                     sx={{ width: '30%', margin: '0px auto' }}
                     variant='contained'
@@ -63,12 +82,15 @@ const ButtonGroup = () => {
                     Append data
                 </Button>
             ) : null}
-            {checked ? null : (
+
+            {isLoading ? (
+                <CircularProgress />
+            ) : checked ? null : (
                 <Button
                     sx={{ width: '30%', margin: '0px auto' }}
                     variant='contained'
-                    onClick={(e) => {
-                        console.log('Submitted!');
+                    onClick={() => {
+                        handleButtonTapped();
                     }}
                 >
                     Select random Data
