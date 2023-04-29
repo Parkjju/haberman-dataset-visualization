@@ -15,40 +15,34 @@ Let's discover **Docusaurus in less than 5 minutes**.
 
 ## Getting Started
 
-Get started by **creating a new site**.
+생존분석은 시간의 흐름에 따른 어떠한 사건의 발생 확률을 알아보는 통계 분석 및 예측 기법이다. 일반적으로 의료분야에서 특정 수술 방법 혹은 치료 방법에 따른 환자의 생존 기간을 분석할 때 활용하거나, 일반적인 IT 분야에서는 시간에 따른 사용자 이탈 분석에도 활용한다. 일반적으로 생존함수(survival function) S(t)는 다음과 같이 정의한다.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+위와 같이 특정 시간 t보다 오래 생존할 확률을 뜻하는 생존함수가 있는 반면, 위험함수(hazard function)는 t시점 직후 사망할 확률을 의미한다. 흔히 생존분석에서는 위험함수가 시간에 따라 변하는 추세를 시간에 따른 위험의 변화로 나타내기 때문에 위험함수가 갖는 의미가 크다. 위험함수는 다음과 같이 정의한다.
 
-### What you'll need
+위험함수는 정의에서 보다시피 순간적인 짧은 시간에 일어나는 극한의 의미를 지닌다.
 
--   [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-    -   When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+## 4.2 Censored Data
 
-## Generate a new site
+생존분석 시 관찰이 종료되는 시점 사이에서 사건 발생 여부를 확인할 수 없는 자료를 중도절단(censored) 자료라고 한다. 일반적인 통계분석 방법과는 다르게 생존분석에서는 이런 자료를 포함하여 분석을 진행한다. 중도절단 종류는 다양한데 left censoring(좌중도절단)은 실제 값이 특정 값 이하인 것은 알고 있지만 그 값이 정확히 어떤 값인지 모를 때 발생한다. right censoring(우중도절단)은 실제 값이 특정 값 이상인 것은 알고 있으나 그 값이 정확히 어떤 값인지 모를 때 발생한다.
 
-Generate a new Docusaurus site using the **classic template**.
+## 4.3 Kaplan-Meier
 
-The classic template will automatically be added to your project after you run the command:
+생존 분석에서 특정시기보다 더 오래 생존할 확률을 추정하는 것을 ‘생존함수’라고 하는데 일반적으로 Kaplan-Meier 방법을 통해 추정할 수 있다. Kaplan-Meier 방법은 사건 발생 시점마다 생존율을 구하고 최종적으로 누적생존율을 산출한다. 관찰기간 순서대로 자료를 정렬하고 각 구간별로 생존자수의 비율인 구간생존율 P(t)를 구한다. 누적생존율 S(t)는 구간별 구간생존율을 곱해서 산출할 수 있다.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+x축은 시간 t를 나타내며 y축은 대상이 시간 t 이후에도 사건을 경험하지 못할 확률을 나타낸다. Kaplan-Meier curve를 통해 특정 시점의 생존율을 추정할 수 있다.
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+## 4.4 Cox PH model
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+Cox비례위험모형(Cox proportional hazard model)은 생존기간과 영향을 미치는 여러 요인을 알아보는 분석이다. Kaplan-meier이 사건이 발생한 것에 초점을 둔다면, Cox분석은 생존에 영향을 미치는 여러 위험요소에 대해 분석한다. 따라서 Kaplan-Meier 분석이 집중하는 특성 외의 다른 요인은 통제할 수 없다는 한계가 있기 때문에 Cox 비례위험모형을 사용한다. 또한, 이 모형은 생존시간에 대해 어떠한 분포형태도 가정하지 않으므로 비모수적이면서 모형에 근거한 회귀계수를 추정한다는 점에서 semiparametric 모형이라고도 한다.
 
-## Start your site
+Cox PH 모형은 다양한 관측치들을 동시에 통제하여, 사건 발생에 미치는 영향을 분석하는 다변량 분석법이다. 또한 생존함수가 지수함수(Exponential Function)를 따른다는 것과 두 군의 위험비가 연구기간동안 일정하게 유지된다는 비례위험가정, 이 두 가지 가정이 요구된다. 특정 시점에서의 생존함수는 위험비에 대한 지수함수로 표현될 수 있어야 하며, 위험비는 연구기간 내 일정하게 유지되어야 한다. 이 모형의 식은 다음과 같다.
 
-Run the development server:
+i번째 환자의 예후변수 값이 이고, 는 회귀모형 계수이며 공변량의 영향을 측정한다. 만약 모든 예후변수가 0값을 가진다면 위험함수에 미치는 변수의 영향이 없다는 뜻이고 이런 경우엔 기본적으로 위험함수가 가 되므로 이는 기저위험함수(baseline hazard function)라고 한다.
+의 부호는 대상의 위험에 영향을 미친다. 가 양수일 때 사건의 위험도가 더 높기 때문에 특정 대상에 대한 사건 발생 확률이 더 높다는 것을 의미한다. 반면 음수일 때는 사건 발생 위험이 더 낮다는 것을 의미한다. 또한 값이 1과 같다면 위험에 영향을 미치지 않고 1보다 작은 값의 경우 위험도가 낮으며 1보다 클 경우 위험도가 높다는 것을 의미한다.
+인간을 대상으로 하는 생존분석에는 수많은 변수가 존재하기 때문에 하고자 하는 연구에 맞는 예후 인자들을 조정하여 원하는 결과를 도출할 수 있다.
 
-```bash
-cd my-website
-npm run start
-```
+## 4.5 Reference
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+1. Cox 비례위험모형을 이용한 우측 대장암 3기 자료 분석 – 한국데이터정보과학회 : 논문 – DBpia
+2. Survival analysis: Part I — analysis of time-to-event, Junyong In et al., Korean Journal of Anesthesiology, 2018
+3. 박난희(2010). 생존분석 자료를 이용한 Cox비례위험함수모형의 고찰. 석사학위논문. 이화여자대학교. 서울.
