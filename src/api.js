@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL =
-    'http://ec2-43-200-171-40.ap-northeast-2.compute.amazonaws.com';
+axios.defaults.baseURL = 'https://survival-analysis.site/';
 
 export const fetchGraphData = () => {
     return axios.get('/patients/random');
