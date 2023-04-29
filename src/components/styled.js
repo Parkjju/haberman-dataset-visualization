@@ -21,3 +21,8 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 `;
+
+export const Img = styled.img`
+    width: 50%;
+    margin: 0 auto;
+`;
