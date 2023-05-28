@@ -27,7 +27,7 @@ for (let index = 30; index < 80; index += 1) {
     labels.push(index);
 }
 
-export default function MyChart() {
+export default function MyChart({ strokeColor, backgroundColor }) {
     const graphData = useSelector((state) => state.graph);
 
     labels = labels.map((data) => String(data));
@@ -40,12 +40,16 @@ export default function MyChart() {
                     return {
                         label: `Dataset ${index}`,
                         data,
-                        borderColor: `#${Math.floor(
-                            Math.random() * 16777215
-                        ).toString(16)}`,
-                        backgroundColor: `#${Math.floor(
-                            Math.random() * 16777215
-                        ).toString(16)}`,
+                        borderColor: strokeColor
+                            ? `${strokeColor}`
+                            : `#${Math.floor(Math.random() * 16777215).toString(
+                                  16
+                              )}`,
+                        backgroundColor: backgroundColor
+                            ? `${backgroundColor}`
+                            : `#${Math.floor(Math.random() * 16777215).toString(
+                                  16
+                              )}`,
                         yAxisID: 'y',
                     };
                 }),
@@ -107,5 +111,7 @@ export default function MyChart() {
             },
         },
     };
-    return <Line options={options} data={data} />;
+    return (
+        <Line options={options} data={data} style={{ marginBottom: '30px' }} />
+    );
 }
