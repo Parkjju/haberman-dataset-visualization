@@ -18,3 +18,11 @@ export const fetchPredictedData = ({ queryKey }) => {
         },
     });
 };
+
+export const fetchKaplanData = () => {
+    return axios.get('/patients/kaplan/');
+};
+
+export const fetchKaplanData2 = () => {
+    return axios.get('/patients/kaplan2/');
+};

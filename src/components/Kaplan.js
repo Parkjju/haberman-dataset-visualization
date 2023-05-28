@@ -11,6 +11,8 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
+import { useQuery } from 'react-query';
+import { fetchKaplanData } from '../api';
 
 ChartJS.register(
     CategoryScale,
@@ -23,12 +25,20 @@ ChartJS.register(
 );
 
 let labels = [];
-for (let index = 30; index < 80; index += 1) {
+for (let index = 0; index < 100; index += 5) {
     labels.push(index);
 }
 
-export default function MyChart({ strokeColor, backgroundColor }) {
-    const graphData = useSelector((state) => state.graph);
+export default function Kaplan({ strokeColor, backgroundColor }) {
+    const fetchResult = useQuery(['kaplan'], fetchKaplanData);
+    const [graphData, setGraphData] = useState({});
+    useEffect(() => {
+        if (fetchResult.data) {
+            setGraphData(fetchResult.data.data);
+        } else {
+            return;
+        }
+    }, [fetchResult.isLoading]);
 
     labels = labels.map((data) => String(data));
 
@@ -57,6 +67,7 @@ export default function MyChart({ strokeColor, backgroundColor }) {
         });
     }, [graphData]);
 
+    // strokeColor="#95a5a6" backgroundColor="#95a5a6"
     const [data, setData] = useState({
         labels,
         datasets: [
