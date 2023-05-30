@@ -108,6 +108,10 @@ export default function Kaplan2({ strokeColor, backgroundColor }) {
                 type: 'linear',
                 display: true,
                 position: 'left',
+                title: {
+                    display: true,
+                    text: 'S(t)',
+                },
             },
             y1: {
                 type: 'linear',
@@ -115,6 +119,12 @@ export default function Kaplan2({ strokeColor, backgroundColor }) {
                 position: 'right',
                 grid: {
                     drawOnChartArea: false,
+                },
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'timeline',
                 },
             },
         },
