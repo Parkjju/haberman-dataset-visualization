@@ -26,3 +26,7 @@ export const fetchKaplanData = () => {
 export const fetchKaplanData2 = () => {
     return axios.get('/patients/kaplan2/');
 };
+
+export const fetchSummary = () => {
+    return axios.get('/patients/summary/');
+};
