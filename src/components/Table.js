@@ -19,7 +19,6 @@ export default function BasicTable() {
         }
     }, [fetchResult.isLoading]);
 
-    console.log('graph: ', graphData);
     return (
         <TableContainer component={Paper} sx={{ marginBottom: 5 }}>
             <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -47,7 +46,7 @@ export default function BasicTable() {
                                       </TableCell>
                                       {row[1].map((data) => (
                                           <TableCell align='right'>
-                                              {data}
+                                              {data.toFixed(5)}
                                           </TableCell>
                                       ))}
                                   </TableRow>

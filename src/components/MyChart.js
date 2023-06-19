@@ -27,8 +27,11 @@ for (let index = 30; index < 80; index += 1) {
     labels.push(index);
 }
 
-export default function MyChart({ strokeColor, backgroundColor }) {
+export default function MyChart({ onlyFirst, strokeColor, backgroundColor }) {
     const graphData = useSelector((state) => state.graph);
+    const [isOnlyFirst, setIsOnlyFirst] = useState(
+        onlyFirst === 'true' ? true : false
+    );
 
     labels = labels.map((data) => String(data));
 
@@ -121,7 +124,12 @@ export default function MyChart({ strokeColor, backgroundColor }) {
             },
         },
     };
+
     return data ? (
-        <Line options={options} data={data} style={{ marginBottom: '30px' }} />
+        <Line
+            options={options}
+            data={isOnlyFirst ? { labels, datasets: [data.datasets[0]] } : data}
+            style={{ marginBottom: '30px' }}
+        />
     ) : null;
 }
