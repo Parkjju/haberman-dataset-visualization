@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
 `;
 
 export const Img = styled.img`
